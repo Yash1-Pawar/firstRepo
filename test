@@ -59,3 +59,16 @@ public class SharePointRESTConnector {
         return Base64.getEncoder().encodeToString(credentials.getBytes());
     }
 }
+
+
+# Replace the placeholders with your actual values
+SITE_URL="https://your-sharepoint-site.sharepoint.com/sites/your-site"
+DOCUMENT_LIBRARY="Documents"
+FILE_PATH="/path/to/your/file.csv"
+ACCESS_TOKEN="YOUR_ACCESS_TOKEN"
+
+# API endpoint for file upload
+UPLOAD_URL="${SITE_URL}/_api/web/GetFolderByServerRelativeUrl('${DOCUMENT_LIBRARY}')/Files/add(url='$(basename ${FILE_PATH})',overwrite=true)"
+
+# Upload the file using curl
+curl -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Content-Type: application/json" --data-binary "@${FILE_PATH}" "${UPLOAD_URL}"
