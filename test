@@ -72,3 +72,5 @@ UPLOAD_URL="${SITE_URL}/_api/web/GetFolderByServerRelativeUrl('${DOCUMENT_LIBRAR
 
 # Upload the file using curl
 curl -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Content-Type: application/json" --data-binary "@${FILE_PATH}" "${UPLOAD_URL}"
+
+https://global-sharepoint.com/sharepoint-online/in-4-steps-access-sharepoint-online-data-using-postman-tool/?expand_article=1
