@@ -1,0 +1,85 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+
+    public static int minOperations(List<Integer> arr, int threshold, int d) {
+        // Create a map to store information about each unique value in the array.
+        Map<Integer, int[]> dp = new HashMap<>();
+        
+        // Sort the input array in ascending order.
+        Collections.sort(arr);
+        
+        // Initialize the answer variable to store the minimum number of operations.
+        int ans = Integer.MAX_VALUE;
+        
+        // Iterate through the elements in the array.
+        for (int x : arr) {
+            // Initialize a variable to count the number of steps.
+            int steps = 0;
+            
+            // Continue processing while this condition is true.
+            while (true) {
+                // Retrieve the current value information from the map or initialize if it doesn't exist.
+                int[] current = dp.getOrDefault(x, new int[]{0, 0});
+                
+                // Increment the count of this value in the array.
+                current[0]++;
+                
+                // Add the number of steps taken to reach this value.
+                current[1] += steps;
+                
+                // Update the value's information in the map.
+                dp.put(x, current);
+                
+                // Check if the count of this value has reached the specified threshold.
+                if (current[0] >= threshold) {
+                    // Update the answer with the minimum of the current answer and the steps taken.
+                    ans = Math.min(ans, current[1]);
+                }
+                
+                // If the value is 0, break the loop as dividing by 0 is not meaningful.
+                if (x == 0) {
+                    break;
+                }
+                
+                // Divide the value by the specified divisor.
+                x /= d;
+                
+                // Increment the steps counter.
+                steps++;
+            }
+        }
+        
+        // Return the minimum number of operations to reach the threshold.
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the number of elements in the array.
+        int arr_count = scanner.nextInt();
+        List<Integer> arr = new ArrayList<>();
+
+        // Read the elements themselves and add them to the list.
+        for (int i = 0; i < arr_count; i++) {
+            int arr_item = scanner.nextInt();
+            arr.add(arr_item);
+        }
+
+        // Read the threshold and the divisor.
+        int threshold = scanner.nextInt();
+        int d = scanner.nextInt();
+
+        // Call the minOperations method with the input data.
+        int result = minOperations(arr, threshold, d);
+
+        // Print the result to the standard output.
+        System.out.println(result);
+    }
+}
